@@ -130,6 +130,22 @@
     @media(max-width:360px){.type-grid{grid-template-columns:1fr 1fr}.type-card{padding:12px}.tab{font-size:.77rem}.question-value{font-size:.89rem}.choices{grid-template-columns:1fr}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
     @media print{.site-header,.tabs,.hero,.lesson-action,.game-actions,.dict-actions,.privacy,footer{display:none!important}.panel{display:block!important}.game-card{box-shadow:none}}
+
+    /* Nouvelles séries d'exercices */
+    .exercise-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:20px 0}
+    .exercise-pick{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:16px;text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:4px}
+    .exercise-pick:hover{background:#f8faff;border-color:#9aa9ee}
+    .exercise-pick[aria-pressed="true"]{background:var(--blue-light);border-color:#7184ed;box-shadow:inset 0 0 0 1px #7184ed}
+    .exercise-pick strong{font-size:.95rem;line-height:1.3}
+    .exercise-pick small{color:var(--muted);font-size:.78rem}
+    .exercise-pick .ex-index{font-size:.74rem;color:var(--blue-dark);font-weight:900}
+    .exercise-intro{background:white;border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:19px}
+    .exercise-intro h3{margin:4px 0 6px;font-size:1.3rem}
+    .exercise-intro p{margin:0 0 10px;color:var(--muted);font-size:.93rem}
+    .exercise-recap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px}
+    .exercise-hint{color:var(--muted);font-size:.85rem;margin:16px 0}
+    @media(max-width:720px){.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.exercise-picker{grid-template-columns:repeat(2,minmax(0,1fr))}.exercise-pick{padding:13px 10px}}
+    @media(max-width:360px){.exercise-pick{padding:11px 8px}}
   </style>
 </head>
 <body>
@@ -144,7 +160,7 @@
       <div class="hero-content">
         <div class="eyebrow">Mini-labo d'entraînement</div>
         <h1 id="page-title">Les données,<br>c'est logique !</h1>
-        <p>Apprends à reconnaître les types de données et à compléter le dictionnaire d'une bibliothèque. À ton rythme, avec les corrections.</p>
+        <p>Apprends à reconnaître les types de données et à compléter des dictionnaires variés. À ton rythme, avec les corrections.</p>
         <div class="hero-meta">
           <span class="meta-pill">✦ Cours simple</span>
           <span class="meta-pill">✓ Exercices corrigés</span>
@@ -156,6 +172,7 @@
       <button class="tab" id="tab-cours" role="tab" aria-selected="true" aria-controls="panel-cours" data-panel="cours"><span class="tab-number">01</span> Le cours</button>
       <button class="tab" id="tab-quiz" role="tab" aria-selected="false" aria-controls="panel-quiz" data-panel="quiz"><span class="tab-number">02</span> Quiz des types</button>
       <button class="tab" id="tab-dico" role="tab" aria-selected="false" aria-controls="panel-dico" data-panel="dico"><span class="tab-number">03</span> Dictionnaire</button>
+      <button class="tab" id="tab-series" role="tab" aria-selected="false" aria-controls="panel-series" data-panel="series"><span class="tab-number">04</span> Autres exercices</button>
     </nav>
 
     <section class="panel" id="panel-cours" role="tabpanel" aria-labelledby="tab-cours">
@@ -222,6 +239,34 @@
         <div id="dict-rows"></div>
         <div class="dict-actions"><div class="left-buttons"><button type="submit" class="btn btn-primary" id="dict-check">Corriger mon dictionnaire ✓</button><button type="button" class="btn btn-secondary" id="dict-reset">Recommencer</button></div><span class="dict-score" id="dict-score" role="status"></span></div>
       </form>
+    </section>
+
+    <section class="panel" id="panel-series" role="tabpanel" aria-labelledby="tab-series" hidden>
+      <div class="section-heading">
+        <span class="kicker">Étape 4 · S'entraîner davantage</span>
+        <h2>Cinq nouveaux dictionnaires à compléter</h2>
+        <p>Choisis une situation : lycée, club sportif, cinéma, boutique ou location de vélos. Pour chaque ligne, coche A (texte), N (nombre), D (date) ou L (vrai/faux), comme dans le cours. Chaque correction explique la réponse et donne un exemple.</p>
+      </div>
+      <div class="exercise-picker" id="exercise-picker" aria-label="Choisir un exercice"></div>
+      <div class="exercise-intro">
+        <span class="tag" id="ex-level">Série 1</span>
+        <h3 id="ex-title">Vie scolaire</h3>
+        <p id="ex-description"></p>
+        <div class="exercise-recap"><strong id="ex-completion">0 / 12 renseignées</strong><span class="score-pill" id="ex-best">Meilleur score : —</span></div>
+      </div>
+      <form class="dict" id="ex-form">
+        <div id="ex-rows"></div>
+        <div class="dict-actions">
+          <div class="left-buttons">
+            <button type="submit" class="btn btn-primary" id="ex-check">Corriger cette série ✓</button>
+            <button type="button" class="btn btn-secondary" id="ex-reset">Recommencer</button>
+            <button type="button" class="btn btn-secondary" id="ex-next">Série suivante →</button>
+          </div>
+          <span class="dict-score" id="ex-score" role="status"></span>
+        </div>
+        <div class="feedback" id="ex-feedback" aria-live="polite" hidden></div>
+      </form>
+      <p class="exercise-hint">Astuce : un code postal ou un téléphone se stocke comme du texte (A), même s'il contient des chiffres. Les numéros internes uniquement numériques sont classés N dans ces exercices.</p>
     </section>
     <p class="privacy">🔒 Sans compte, sans publicité, sans collecte de réponses. Le meilleur score du quiz est conservé uniquement sur cet appareil.</p>
   </main>
@@ -361,6 +406,86 @@
       $('#dict-rows').lastElementChild?.scrollIntoView({block:'nearest',behavior:'smooth'});
     });
     $('#dict-reset').addEventListener('click',createDict);
+
+    // Exercices complémentaires : données locales, sans API ni collecte.
+    const EXERCISES = [{"id":"ecole","title":"Vie scolaire","level":"Débutant","description":"Le lycée enregistre les élèves, leur classe et leur présence","rows":[["NUM_ELEVE","Numéro interne de l’élève","N","108","Identifiant interne entier dans cet exercice."],["NOM_ELEVE","Nom de l’élève","A","Dubois","Un nom est du texte."],["PRENOM_ELEVE","Prénom de l’élève","A","Jana","Un prénom est du texte."],["DATE_NAISSANCE","Date de naissance","D","18/03/2011","Une date complète se classe D."],["NOM_CLASSE","Classe de l’élève","A","2nde 3","Un nom de classe est du texte, même avec un chiffre."],["MOYENNE_GENERALE","Moyenne de l’élève","N","14,5","Une moyenne est un nombre décimal."],["EST_DEMI_PENSIONNAIRE","Déjeune à la cantine ?","L","Vrai","Une question oui/non est de type logique."],["DATE_INSCRIPTION","Date d’inscription","D","02/09/2026","C’est une date."],["NOMBRE_ABSENCES","Nombre d’absences","N","2","Il s’agit d’une quantité entière."],["EMAIL_PARENT","Courriel du parent","A","parent@example.fr","Une adresse électronique est du texte."],["EST_PRESENT","Élève présent ?","L","Faux","Deux états possibles : vrai ou faux."],["CODE_POSTAL","Code postal de l’élève","A","03000","C’est un code, pas une quantité : il faut préserver les zéros initiaux."]]},{"id":"sport","title":"Club sportif","level":"Essentiel","description":"Le club gère les licenciés, les matchs et les cotisations","rows":[["NUM_LICENCE","Numéro interne de licence","N","427","Identifiant interne entier dans cet exercice."],["NOM_JOUEUR","Nom du joueur","A","Martin","Un nom est du texte."],["PRENOM_JOUEUR","Prénom du joueur","A","Lou","Un prénom est du texte."],["DATE_ADHESION","Date d’adhésion","D","04/10/2026","C’est une date complète."],["NOM_EQUIPE","Nom de l’équipe","A","Les Étoiles","Un nom d’équipe est du texte."],["NOMBRE_MATCHS","Nombre de matchs joués","N","8","On compte les matchs avec un entier."],["COTISATION_EUROS","Montant de la cotisation","N","45,50","Une somme est numérique."],["A_PAYE","Cotisation payée ?","L","Vrai","Une réponse vrai/faux est logique."],["DATE_RENCONTRE","Date du prochain match","D","21/11/2026","Il s’agit d’une date."],["SCORE_EQUIPE","Nombre de buts marqués","N","3","Un score en buts est une quantité."],["EST_BLESSE","Joueur blessé ?","L","Faux","La réponse est vrai ou faux."],["TELEPHONE","Téléphone du responsable","A","0612345678","Un téléphone est un code, pas un nombre à calculer."]]},{"id":"cinema","title":"Cinéma","level":"Essentiel","description":"Le cinéma organise ses séances et ses réservations","rows":[["NUM_SEANCE","Numéro interne de séance","N","503","Identifiant interne entier dans cet exercice."],["TITRE_FILM","Titre du film","A","Voyage dans les étoiles","Un titre est du texte."],["DATE_SEANCE","Date de la séance","D","15/11/2026","C’est une date."],["NOMBRE_PLACES","Nombre de places disponibles","N","38","On dénombre les places."],["NUM_SALLE","Numéro interne de salle","N","4","Ce numéro de salle est un entier."],["LANGUE_VERSION","Langue de projection","A","Français","Une langue est un libellé."],["EST_COMPLET","Séance complète ?","L","Faux","Une question oui/non est logique."],["PRIX_BILLET","Prix d’un billet","N","9,50","Un prix est un nombre décimal."],["NOM_CLIENT","Nom du client","A","Lopez","Le nom est du texte."],["DATE_ACHAT","Date d’achat","D","12/11/2026","Une date d’achat est une date."],["RESERVATION_CONFIRMEE","Réservation confirmée ?","L","Vrai","La confirmation est un état vrai/faux."],["CODE_RESERVATION","Code de réservation","A","CIN-007","Une référence avec lettres et tiret est du texte."]]},{"id":"magasin","title":"Petite boutique","level":"Intermédiaire","description":"Une boutique suit ses articles, stocks et commandes","rows":[["REF_ARTICLE","Référence de l’article","A","AB-008","Une référence est un code, pas une quantité."],["NOM_PRODUIT","Nom du produit","A","Cahier","Un nom est du texte."],["CATEGORIE","Catégorie de produit","A","Papeterie","Une catégorie est un libellé."],["PRIX_UNITAIRE","Prix unitaire","N","3,90","Un prix est numérique."],["STOCK","Quantité en stock","N","25","C’est une quantité."],["DATE_RECEPTION","Date de réception","D","09/11/2026","C’est une date."],["EST_EN_PROMOTION","Produit en promotion ?","L","Vrai","La réponse est vrai ou faux."],["DATE_PEREMPTION","Date de péremption si applicable","D","15/12/2026","Lorsque la donnée existe, sa valeur est une date."],["TAUX_TVA","Pourcentage de TVA","N","20","Un pourcentage est un nombre."],["CODE_BARRES","Code-barres stocké comme texte","A","0012345678905","Ce code n’est pas une quantité et ses zéros comptent."],["NOM_FOURNISSEUR","Nom du fournisseur","A","Papier Sud","Un nom est du texte."],["COMMANDE_VALIDEE","Commande validée ?","L","Faux","Une validation prend deux états : vrai ou faux."]]},{"id":"velos","title":"Location de vélos","level":"Intermédiaire","description":"Une agence suit ses vélos et les locations des clients","rows":[["NUM_VELO","Numéro interne du vélo","N","37","Ce numéro interne est un entier."],["MODELE","Modèle du vélo","A","Vélo urbain","Un modèle est une désignation textuelle."],["COULEUR","Couleur du vélo","A","Rouge","Une couleur est du texte."],["DATE_LOCATION","Date de départ","D","16/11/2026","Une date se classe D."],["DATE_RETOUR","Date de retour prévue","D","19/11/2026","C’est une date."],["PRIX_PAR_JOUR","Tarif de location par jour","N","12,50","Le tarif est numérique."],["NOMBRE_JOURS","Durée en jours","N","3","C’est une quantité numérique."],["EST_DISPONIBLE","Vélo disponible ?","L","Vrai","La disponibilité est vrai ou faux."],["CASQUE_INCLUS","Casque fourni ?","L","Faux","Un état oui/non est logique."],["NOM_LOCATAIRE","Nom du locataire","A","Bernard","Un nom est du texte."],["CODE_ANTIVOL","Code alphanumérique de l’antivol","A","AV-004","Les lettres et chiffres forment un code textuel."],["KILOMETRAGE","Kilométrage du vélo","N","236,5","Une distance mesurée est une quantité numérique."]]}];
+    const EX_BEST_KEY='dataquiz-series-best-v1';
+    let exIndex=0,exCorrected=false;
+    function exBest(id){
+      try{const b=JSON.parse(localStorage.getItem(EX_BEST_KEY)||'{}');return typeof b[id]==='number'?b[id]:null;}catch{return null;}
+    }
+    function exSaveBest(id,score){
+      try{const b=JSON.parse(localStorage.getItem(EX_BEST_KEY)||'{}');if(typeof b[id]!=='number'||score>b[id]){b[id]=score;localStorage.setItem(EX_BEST_KEY,JSON.stringify(b));}}catch{}
+    }
+    function exChooser(){
+      const root=$('#exercise-picker');root.replaceChildren();
+      EXERCISES.forEach((ex,i)=>{
+        const b=document.createElement('button');b.type='button';b.className='exercise-pick';
+        b.setAttribute('aria-pressed',String(exIndex===i));
+        const num=document.createElement('span');num.className='ex-index';num.textContent='SÉRIE '+(i+1)+' · '+ex.level;
+        const title=document.createElement('strong');title.textContent=ex.title;
+        const small=document.createElement('small');const best=exBest(ex.id);
+        small.textContent=best===null?'12 données à classer':'Meilleur : '+best+'/12';
+        b.append(num,title,small);b.addEventListener('click',()=>exSelect(i));root.append(b);
+      });
+    }
+    function exCompletion(){
+      const count=EXERCISES[exIndex].rows.filter((_,i)=>Boolean(document.querySelector('input[name="ex-'+i+'"]:checked'))).length;
+      setText('#ex-completion',count+' / 12 renseignées');
+    }
+    function exSelect(i){
+      exIndex=i;exCorrected=false;
+      const ex=EXERCISES[i],best=exBest(ex.id);
+      setText('#ex-title',ex.title);setText('#ex-description',ex.description);
+      setText('#ex-level','Série '+(i+1)+' sur '+EXERCISES.length+' · '+ex.level);
+      setText('#ex-best','Meilleur score : '+(best===null?'—':best+'/12'));
+      setText('#ex-score','');$('#ex-check').disabled=false;$('#ex-feedback').hidden=true;
+      const root=$('#ex-rows');root.replaceChildren();
+      ex.rows.forEach((entry,j)=>{
+        const row=document.createElement('fieldset');row.className='dict-row ex-row';
+        const info=document.createElement('div');
+        const name=document.createElement('span');name.className='dict-term';name.textContent=entry[0];
+        const desc=document.createElement('div');desc.className='dict-desc';desc.textContent=entry[1];
+        info.append(name,desc);
+        const choices=document.createElement('div');choices.className='dict-options';choices.setAttribute('role','radiogroup');choices.setAttribute('aria-label','Type de '+entry[0]);
+        ['A','N','D','L'].forEach(type=>{
+          const label=document.createElement('label');label.className='dict-option';
+          const radio=document.createElement('input');radio.type='radio';radio.name='ex-'+j;radio.value=type;
+          radio.setAttribute('aria-label',TYPE_NAMES[type]);radio.addEventListener('change',exCompletion);
+          const text=document.createElement('span');text.textContent=type;label.append(radio,text);choices.append(label);
+        });
+        row.append(info,choices);root.append(row);
+      });
+      exCompletion();exChooser();
+    }
+    $('#ex-form').addEventListener('submit',event=>{
+      event.preventDefault();if(exCorrected)return;exCorrected=true;
+      const ex=EXERCISES[exIndex],rows=$('#ex-rows .ex-row');let score=0;
+      ex.rows.forEach((entry,i)=>{
+        const [field,description,type,example,why]=entry,row=rows[i],picked=row.querySelector('input:checked')?.value;
+        const good=picked===type;if(good)score++;
+        row.classList.add(good?'correct-row':'wrong-row');
+        row.querySelectorAll('input').forEach(input=>input.disabled=true);
+        const note=document.createElement('div');note.className='dict-reason';
+        const result=document.createElement('strong');result.textContent=good?'✓ Bonne réponse. ':'Réponse : '+type+' ('+TYPE_NAMES[type]+'). ';
+        const detail=document.createElement('span');detail.textContent=why+' Exemple : '+example;
+        note.append(result,detail);row.append(note);
+      });
+      exSaveBest(ex.id,score);$('#ex-check').disabled=true;
+      setText('#ex-score','Résultat : '+score+' / 12 · '+(score/12*20).toFixed(1).replace('.',',')+' / 20');
+      const msg=$('#ex-feedback');msg.hidden=false;msg.className='feedback '+(score>=10?'success':'warning');
+      const headline=document.createElement('strong');headline.textContent=score>=10?'Très bien !':score>=7?'Bon entraînement !':'Continue à t’entraîner !';
+      const text=document.createElement('p');text.textContent='Tu as '+score+' bonnes réponses sur 12. Lis les explications sous chaque ligne puis recommence, ou passe à la série suivante.';
+      msg.replaceChildren(headline,text);
+      setText('#ex-best','Meilleur score : '+exBest(ex.id)+'/12');exChooser();
+      msg.scrollIntoView({block:'nearest',behavior:'smooth'});
+    });
+    $('#ex-reset').addEventListener('click',()=>exSelect(exIndex));
+    $('#ex-next').addEventListener('click',()=>{
+      exSelect((exIndex+1)%EXERCISES.length);
+      $('#ex-title').scrollIntoView({block:'start',behavior:'smooth'});
+    });
+    exSelect(0);
     updateBest();startQuiz();createDict();
   </script>
 </body>
