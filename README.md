@@ -6,9 +6,10 @@ Application pédagogique gratuite pour réviser les notions de **données et de 
 - **Cours** : données, noms de données, identifiants, types A (alphabétique), N (numérique), D (date) et L (logique).
 - **Quiz** : 12 questions sélectionnées au hasard, avec corrections expliquées.
 - **Exercice pratique** : compléter le dictionnaire des données d'une bibliothèque et consulter la correction.
+- **5 autres dictionnaires** : vie scolaire, club sportif, cinéma, petite boutique et location de vélos, soit 60 données supplémentaires à classer en A/N/D/L. Correction détaillée par ligne et score sur 20, avec meilleur score enregistré localement pour chaque série.
 
 ## Utilisation
-Ouvrir `index.html` dans un navigateur sur ordinateur ou téléphone. L'application ne requiert ni connexion, ni compte, ni bibliothèque JavaScript externe. Le meilleur score du quiz est enregistré localement dans le navigateur.
+Ouvrir `index.html` dans un navigateur sur ordinateur ou téléphone. L'application ne requiert ni connexion, ni compte, ni bibliothèque JavaScript externe. Les meilleurs scores du quiz et des cinq séries sont enregistrés localement dans le navigateur.
 
 ## Publication sur Cloudflare Pages via GitHub
 1. Aller dans **Cloudflare > Workers & Pages > Create > Pages > Connect to Git**.
